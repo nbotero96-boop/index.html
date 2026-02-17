@@ -78,6 +78,49 @@
   50%  { transform: translateY(-10px); opacity: 0.8; }
   100% { transform: translateY(10px); opacity: 0.6; }
 }
+.corazones {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.corazon {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  opacity: 0;
+  animation: flotarCorazon 5s ease-in-out infinite;
+}
+
+.corazon::before,
+.corazon::after {
+  content: "";
+  position: absolute;
+  width: 15px;
+  height: 24px;
+  background: #f28482;
+  border-radius: 15px 15px 0 0;
+}
+
+.corazon::before {
+  left: 15px;
+  transform: rotate(-45deg);
+  transform-origin: 0 100%;
+}
+
+.corazon::after {
+  left: 0;
+  transform: rotate(45deg);
+  transform-origin: 100% 100%;
+}
+
+@keyframes flotarCorazon {
+  0%   { transform: translateY(10px); opacity: 0; }
+  20%  { opacity: 0.6; }
+  50%  { transform: translateY(-15px); opacity: 0.9; }
+  100% { transform: translateY(10px); opacity: 0.6; }
+}
 
   </style>
 </head>
@@ -107,7 +150,7 @@
       "Ahorita solo quiero dos cosas",
       "Tenerte en mi vida y estar presente en la tuya",
       "Y de pronto un room tour, pero eso es caso aparte.",
-      "Pero tenerte en cuenta y tú a mí",
+      "Pero tenerte en cuenta a tí y tú a mí.",
       "No puedo decirte que quiero ser tu mejor amigo",
       "Porque no quiero quedar así, peeero",
       "podemos hablar como unos.",
@@ -118,11 +161,11 @@
       "vamos a disfrutar que",
       "La noche se puso bonita",
       "pero no tanto como tú",
-      "JAMÁS Y NUNCA como tú",
+      "JAMÁS Y NUNCA como tú, Laura",
       "Me creía Bad Bunny jaja",
       "Pero bueno, te dije que todos los días te iba a decir algo, cierto?",
       "Simplemente esta fue mi forma de decirte hoy que",
-      "Te quiero mucho",
+      "TE QUIERO MUCHO",
       "Juli Juliana morena preciosa reina de mi todo",
       "Es simple, pero que tengas lindo día.",
       "...",
@@ -146,9 +189,19 @@
     function mostrarMensaje() {
       document.body.style.backgroundColor = colores[indice % colores.length];
 
-      mensajeDiv.className = "mensaje";
-      mensajeDiv.textContent = mensajes[indice];
-      accionDiv.innerHTML = "";
+mensajeDiv.className = "mensaje";
+mensajeDiv.textContent = mensajes[indice];
+accionDiv.innerHTML = "";
+
+// limpiar decoraciones
+document.getElementById("flores").innerHTML = "";
+document.getElementById("corazones").innerHTML = "";
+
+// mostrar corazones solo en "Te quiero mucho"
+if (mensajes[indice] === "TE QUIERO MUCHO") {
+  mostrarCorazones();
+}
+
 
       if (indice < mensajes.length - 1) {
         const boton = document.createElement("button");
@@ -193,10 +246,26 @@ function mostrarFlores() {
     requestAnimationFrame(() => flor.style.opacity = 1);
   }
 }
+function mostrarCorazones() {
+  const contenedor = document.getElementById("corazones");
+  contenedor.innerHTML = "";
+
+  for (let i = 0; i < 6; i++) {
+    const corazon = document.createElement("div");
+    corazon.className = "corazon";
+    corazon.style.top = Math.random() * 100 + "%";
+    corazon.style.left = Math.random() * 100 + "%";
+    corazon.style.animationDelay = (Math.random() * 3) + "s";
+
+    contenedor.appendChild(corazon);
+    requestAnimationFrame(() => corazon.style.opacity = 1);
+  }
+}
 
     mostrarMensaje();
 
   </script>
 <div id="flores" class="flores"></div>
+<div id="corazones" class="corazones"></div>
 </body>
 </html>
