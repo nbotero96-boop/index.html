@@ -1,42 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>—</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
       margin: 0;
       height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      background: #ffffff;
-      font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+      justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      transition: background-color 0.8s ease;
     }
-    .texto {
-      font-size: 36px;
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+      padding: 30px;
+    }
+
+    .mensaje {
+      font-size: 26px;
+      line-height: 1.4;
       margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: aparecer 0.8s forwards;
     }
-    .boton {
-      padding: 14px 26px;
-      font-size: 18px;
-      text-decoration: none;
-      color: white;
-      background: black;
+
+    @keyframes aparecer {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    button, a.boton-link {
+      padding: 14px 28px;
+      font-size: 16px;
+      border: none;
       border-radius: 999px;
+      cursor: pointer;
+      background: rgba(0,0,0,0.75);
+      color: white;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    button:hover, a.boton-link:hover {
+      background: black;
     }
   </style>
 </head>
 <body>
 
-  <div class="texto">te quiero</div>
+  <div class="container">
+    <div id="mensaje" class="mensaje"></div>
+    <div id="accion"></div>
+  </div>
 
-  <a class="boton"
-     href="https://wa.me/+573022811710?text=te%20quiero">
-     Enviar
-  </a>
+  <script>
+    const mensajes = [
+      "Hola Juli",
+      "Cómo estás morenita hermosa?",
+      "Yo se que no estás muy feliz conmigo",
+      "De pronto estés pensando en ghostearme",
+      "De pronto pude hacer esto antes y no ahorita después de la bobada que pasó",
+      "Pero, ¿sabes una cosa?",
+      "Eres una mujer increíble",
+      "Hermosa",
+      "Chistosa (digamos que sí)",
+      "Que me encanta escuchar hablar",
+      "Que se merece muchas cosas bonitas",
+      "Y con esto no espero enamorarte",
+      "Me cuesta aceptarlo, pero yo ya no busco eso",
+      "Me rendí? Puede que sí",
+      "Ahorita solo quiero dos cosas",
+      "Tenerte en mi vida y estar presente en la tuya",
+      "Y de pronto un room tour, pero eso es caso aparte.",
+      "Pero tenerte en cuenta y tú a mí",
+      "No puedo decirte que quiero ser tu mejor amigo",
+      "Porque no quiero quedar así, peeero",
+      "podemos hablar como unos.",
+      "Solo quiero que tengas claro esto:",
+      "No te pienso convencer de tener algo, si se da pues se da",
+      "Y si no pues también, vamos a disfrutarlo",
+      "Me creía Bad Bunny jaja",
+      "Pero bueno, simplemente esta fue mi forma de decirte hoy que",
+      "Te quiero, Juli Juliana morena preciosa reina de mi todo",
+      "Que tengas lindo día",
+      "Igual, hay que meterle un poquito de romanticismo",
+      "Y yo sé que te gusta esta canción, entonces te la dedico Juli"
+    ];
+
+    const colores = [
+      "#fde2e4", "#e2ece9", "#dee2ff", "#fff1e6",
+      "#e8f8f5", "#fef6e4", "#f0efeb", "#e4c1f9"
+    ];
+
+    let indice = 0;
+
+    const mensajeDiv = document.getElementById("mensaje");
+    const accionDiv = document.getElementById("accion");
+
+    function mostrarMensaje() {
+      document.body.style.backgroundColor = colores[indice % colores.length];
+
+      mensajeDiv.className = "mensaje";
+      mensajeDiv.textContent = mensajes[indice];
+      accionDiv.innerHTML = "";
+
+      if (indice < mensajes.length - 1) {
+        const boton = document.createElement("button");
+        boton.textContent = "Siguiente";
+        boton.onclick = () => {
+          indice++;
+          mostrarMensaje();
+        };
+        accionDiv.appendChild(boton);
+      } else {
+        const link = document.createElement("a");
+        link.href = "https://open.spotify.com/track/23WI5V2eD4EyGKxSl7Pyeq?si=SayQ6kPRTtWEuF0VOKaDMg";
+        link.target = "_blank";
+        link.className = "boton-link";
+        link.textContent = "Escuchar canción";
+        accionDiv.appendChild(link);
+      }
+    }
+
+    mostrarMensaje();
+  </script>
 
 </body>
 </html>
